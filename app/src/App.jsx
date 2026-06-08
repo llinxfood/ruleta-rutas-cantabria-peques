@@ -24,30 +24,46 @@ function StatChips({ r }) {
   )
 }
 
-function Actions({ r, center }) {
+function Actions({ r, center, compact }) {
   const [copied, setCopied] = useState(false)
   const waText = `🥾 Plan en Cantabria: ${r.name}. ¡Mira esta ruta para peques!`
+  const waHref = `https://api.whatsapp.com/send?text=${encodeURIComponent(waText + ' ' + shareUrl(r))}`
   function copy() {
     navigator.clipboard?.writeText(shareUrl(r)).then(() => {
       setCopied(true); setTimeout(() => setCopied(false), 1800)
     })
   }
-  const btn = "inline-flex items-center gap-2 rounded-full border border-forest/15 bg-paper px-4 py-2.5 text-sm font-bold text-forest shadow-sm transition hover:border-forest/30 hover:-translate-y-0.5"
+  const base = "inline-flex items-center justify-center rounded-full border border-forest/15 bg-paper text-sm font-bold text-forest shadow-sm transition hover:border-forest/30 hover:-translate-y-0.5"
+  const btn = base + " gap-2 px-4 py-2.5"
+  const iconBtn = base + " h-10 w-10"
   const ico = "h-[18px] w-[18px]"
   return (
-    <div className={`flex flex-wrap gap-2.5 ${center ? 'justify-center' : ''}`}>
+    <div className={`flex flex-wrap items-center gap-2.5 ${center ? 'justify-center' : ''}`}>
       <a href={mapsDirectionsUrl(r)} target="_blank" rel="noopener" className={btn}>
         <img src={mapsLogo} alt="" className={ico} /> Cómo llegar
       </a>
       <a href={wikilocUrl(r)} target="_blank" rel="noopener" className={btn}>
         <img src={wikilocLogo} alt="" className={ico} /> Wikiloc
       </a>
-      <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(waText + ' ' + shareUrl(r))}`} target="_blank" rel="noopener" className={btn}>
-        <img src={waLogo} alt="" className={ico} /> WhatsApp
-      </a>
-      <button onClick={copy} className={btn}>
-        {copied ? '✓ ¡Copiado!' : '🔗 Copiar enlace'}
-      </button>
+      {compact ? (
+        <>
+          <a href={waHref} target="_blank" rel="noopener" className={iconBtn} title="Compartir por WhatsApp" aria-label="Compartir por WhatsApp">
+            <img src={waLogo} alt="" className={ico} />
+          </a>
+          <button onClick={copy} className={iconBtn} title={copied ? '¡Copiado!' : 'Copiar enlace'} aria-label="Copiar enlace">
+            {copied ? '✓' : '🔗'}
+          </button>
+        </>
+      ) : (
+        <>
+          <a href={waHref} target="_blank" rel="noopener" className={btn}>
+            <img src={waLogo} alt="" className={ico} /> WhatsApp
+          </a>
+          <button onClick={copy} className={btn}>
+            {copied ? '✓ ¡Copiado!' : '🔗 Copiar enlace'}
+          </button>
+        </>
+      )}
     </div>
   )
 }
@@ -81,7 +97,7 @@ function RouteCard({ r }) {
       <p className="mt-0.5 text-sm text-salvia">{r.zona}</p>
       <p className="mt-2.5 flex-1 text-sm text-forest/75 leading-relaxed">{r.resumen}</p>
       <div className="mt-3.5"><StatChips r={r} /></div>
-      <div className="mt-4"><Actions r={r} /></div>
+      <div className="mt-4"><Actions r={r} compact /></div>
     </li>
   )
 }
