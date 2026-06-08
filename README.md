@@ -1,4 +1,4 @@
-# 🥾 Ruleta de Rutas de Cantabria (en familia)
+# 🥾 Ruleta de Rutas de Cantabria (con peques)
 
 Una **ruleta interactiva** para elegir al azar tu próxima excursión por Cantabria: **74 senderos fáciles y aptos para ir con peques**. Giras la rueda, te toca una ruta y te da los datos clave, **cómo llegar en coche** y el **track GPS en Wikiloc**.
 
@@ -37,4 +37,4 @@ Las rutas viven en [`app/src/data.js`](app/src/data.js). Distancia, desnivel y t
 
 ---
 
-Hecho con 🌲 para disfrutar Cantabria en familia.
+Hecho con 🌲 para disfrutar Cantabria con peques.

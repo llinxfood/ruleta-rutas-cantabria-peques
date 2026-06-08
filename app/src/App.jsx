@@ -93,18 +93,13 @@ export default function App() {
       <header className="relative -mx-4 w-screen overflow-hidden px-4 pb-28 pt-12 text-center">
         <div className="mountains pointer-events-none absolute inset-0 opacity-90" aria-hidden="true" />
         <div className="relative z-10">
-          <p className="mb-2.5 text-sm font-semibold uppercase tracking-[0.28em] text-salvia">Cantabria · en familia</p>
+          <p className="mb-2.5 text-sm font-semibold uppercase tracking-[0.28em] text-salvia">Cantabria con peques</p>
           <h1 className="mx-auto max-w-[16ch] font-display text-4xl font-semibold leading-[1.05] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)] sm:text-5xl md:text-6xl">
             Ruleta de <span className="italic text-sand">rutas</span> de senderismo
           </h1>
           <p className="mx-auto mt-3.5 max-w-[46ch] text-base text-cream/90 leading-relaxed sm:text-lg">
             {routes.length} senderos fáciles y aptos para ir con peques. Gira la ruleta y descubre vuestra próxima excursión 🥾
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-2.5">
-            {[`🥾 ${routes.length} rutas`, '🚗 Cómo llegar', '📍 Track en Wikiloc'].map(b => (
-              <span key={b} className="rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm font-semibold backdrop-blur">{b}</span>
-            ))}
-          </div>
         </div>
       </header>
 
@@ -175,7 +170,7 @@ export default function App() {
 
       {/* FOOTER */}
       <footer className="mt-16 max-w-xl text-center text-sm leading-relaxed text-salvia">
-        Hecho con 🌲 para disfrutar Cantabria en familia.<br />
+        Hecho con 🌲 para disfrutar Cantabria con peques.<br />
         Distancias y desniveles orientativos · tracks reales en Wikiloc.
         <br />
         <a href={SITE_URL} className="text-sand">{SITE_URL.replace('https://', '')}</a>
