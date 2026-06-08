@@ -9,13 +9,14 @@ const shareUrl = r => `${SITE_URL}#ruta=${slugify(r.name)}`
 
 function StatChips({ r }) {
   const cat = categoryOf(r)
+  const chip = "rounded-full bg-moss/10 border border-moss/25 px-3 py-1 text-sm font-semibold text-forest"
   return (
     <div className="flex flex-wrap gap-2">
-      <span className="rounded-full bg-salvia/15 border border-salvia/25 px-3 py-1 text-sm font-semibold capitalize">{cat.icon} {cat.key}</span>
-      <span className="rounded-full bg-salvia/15 border border-salvia/25 px-3 py-1 text-sm font-semibold">📏 {r.km} km</span>
-      <span className="rounded-full bg-salvia/15 border border-salvia/25 px-3 py-1 text-sm font-semibold">⛰️ {r.desnivel} m</span>
-      <span className="rounded-full bg-salvia/15 border border-salvia/25 px-3 py-1 text-sm font-semibold">{r.tipo === 'Circular' ? '🔄' : '↔️'} {r.tipo}</span>
-      {isAccessible(r) && <span className="rounded-full bg-sand/20 border border-sand/40 px-3 py-1 text-sm font-semibold text-sand">👶 Apto carrito</span>}
+      <span className={chip + " capitalize"}>{cat.icon} {cat.key}</span>
+      <span className={chip}>📏 {r.km} km</span>
+      <span className={chip}>⛰️ {r.desnivel} m</span>
+      <span className={chip}>{r.tipo === 'Circular' ? '🔄' : '↔️'} {r.tipo}</span>
+      {isAccessible(r) && <span className="rounded-full bg-mostaza/25 border border-mostaza/50 px-3 py-1 text-sm font-semibold text-forest">👶 Apto carrito</span>}
     </div>
   )
 }
@@ -28,24 +29,13 @@ function Actions({ r, center }) {
       setCopied(true); setTimeout(() => setCopied(false), 1800)
     })
   }
+  const btn = "inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-bold shadow-sm transition hover:brightness-105 hover:-translate-y-0.5"
   return (
     <div className={`flex flex-wrap gap-2.5 ${center ? 'justify-center' : ''}`}>
-      <a href={mapsDirectionsUrl(r)} target="_blank" rel="noopener"
-         className="inline-flex items-center gap-1.5 rounded-full bg-sand px-4 py-2.5 text-sm font-bold text-forest-deep shadow-lg transition hover:brightness-105 hover:-translate-y-0.5">
-        🚗 Cómo llegar
-      </a>
-      <a href={wikilocUrl(r)} target="_blank" rel="noopener"
-         className="inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-lg transition hover:brightness-105 hover:-translate-y-0.5"
-         style={{ background: '#ff6a00' }}>
-        📍 Wikiloc
-      </a>
-      <a href={`https://wa.me/?text=${encodeURIComponent(waText + ' ' + shareUrl(r))}`} target="_blank" rel="noopener"
-         className="inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-lg transition hover:brightness-105 hover:-translate-y-0.5"
-         style={{ background: '#25D366' }}>
-        🟢 WhatsApp
-      </a>
-      <button onClick={copy}
-         className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-bold text-cream transition hover:bg-white/20">
+      <a href={mapsDirectionsUrl(r)} target="_blank" rel="noopener" className={btn + " bg-terracota text-cream"}>🚗 Cómo llegar</a>
+      <a href={wikilocUrl(r)} target="_blank" rel="noopener" className={btn + " text-white"} style={{ background: '#ff6a00' }}>📍 Wikiloc</a>
+      <a href={`https://api.whatsapp.com/send?text=${encodeURIComponent(waText + ' ' + shareUrl(r))}`} target="_blank" rel="noopener" className={btn + " text-white"} style={{ background: '#25D366' }}>🟢 WhatsApp</a>
+      <button onClick={copy} className="inline-flex items-center gap-1.5 rounded-full border border-forest/20 bg-paper px-4 py-2.5 text-sm font-bold text-forest transition hover:bg-forest/5">
         {copied ? '✓ ¡Copiado!' : '🔗 Copiar enlace'}
       </button>
     </div>
@@ -54,15 +44,14 @@ function Actions({ r, center }) {
 
 function ResultCard({ r, onAgain }) {
   return (
-    <div className="animate-fade-up mx-auto mt-7 w-full max-w-2xl rounded-3xl border border-white/10 bg-white/[0.06] p-7 text-center">
-      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-salvia/80">Vuestra ruta de hoy</p>
-      <h2 className="mt-1.5 font-display text-3xl font-semibold leading-tight text-sand sm:text-4xl">{r.name}</h2>
+    <div className="animate-fade-up mx-auto mt-7 w-full max-w-2xl rounded-3xl border border-forest/10 bg-paper p-7 text-center shadow-xl shadow-forest/5">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-terracota">Vuestra ruta de hoy</p>
+      <h2 className="mt-1.5 font-display text-3xl font-semibold leading-tight text-forest-deep sm:text-4xl">{r.name}</h2>
       <p className="mt-3 text-sm font-semibold text-salvia">📍 {r.zona} · {r.comarca}</p>
       <div className="mt-3.5 flex justify-center"><StatChips r={r} /></div>
-      <p className="mt-3 text-cream/90 leading-relaxed">{r.resumen}</p>
+      <p className="mt-3 text-forest/80 leading-relaxed">{r.resumen}</p>
       <div className="mt-5"><Actions r={r} center /></div>
-      <button onClick={onAgain}
-        className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-white/15 px-4 py-2 text-sm font-semibold text-cream/80 transition hover:bg-white/10">
+      <button onClick={onAgain} className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-forest/15 px-4 py-2 text-sm font-semibold text-forest/70 transition hover:bg-forest/5">
         🎡 Girar otra vez
       </button>
     </div>
@@ -72,15 +61,15 @@ function ResultCard({ r, onAgain }) {
 function RouteCard({ r }) {
   const cat = categoryOf(r)
   return (
-    <li className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.05] p-5 transition hover:border-sand/40 hover:bg-white/[0.08]">
+    <li className="flex flex-col rounded-2xl border border-forest/10 bg-paper p-5 shadow-sm transition hover:border-terracota/40 hover:shadow-md">
       <div className="mb-2 flex flex-wrap items-center gap-2">
-        <span className="rounded-full bg-forest px-2.5 py-0.5 text-xs font-semibold text-salvia">{r.comarca}</span>
-        <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-xs font-semibold capitalize">{cat.icon} {cat.key}</span>
-        {isAccessible(r) && <span className="rounded-full bg-sand/20 px-2.5 py-0.5 text-xs font-semibold text-sand">👶 carrito</span>}
+        <span className="rounded-full bg-moss/10 px-2.5 py-0.5 text-xs font-semibold text-moss">{r.comarca}</span>
+        <span className="rounded-full bg-forest/5 px-2.5 py-0.5 text-xs font-semibold text-forest capitalize">{cat.icon} {cat.key}</span>
+        {isAccessible(r) && <span className="rounded-full bg-mostaza/25 px-2.5 py-0.5 text-xs font-semibold text-forest">👶 carrito</span>}
       </div>
-      <h3 className="font-display text-lg font-semibold text-cream">{r.name}</h3>
+      <h3 className="font-display text-lg font-semibold text-forest-deep">{r.name}</h3>
       <p className="mt-0.5 text-sm text-salvia">{r.zona}</p>
-      <p className="mt-2.5 flex-1 text-sm text-cream/85 leading-relaxed">{r.resumen}</p>
+      <p className="mt-2.5 flex-1 text-sm text-forest/75 leading-relaxed">{r.resumen}</p>
       <div className="mt-3.5"><StatChips r={r} /></div>
       <div className="mt-4"><Actions r={r} /></div>
     </li>
@@ -106,7 +95,6 @@ export default function App() {
   const wheelRef = useRef(null)
   const resultRef = useRef(null)
 
-  // Enlace profundo: al abrir con #ruta=slug, muestra esa ruta
   useEffect(() => {
     const m = window.location.hash.match(/ruta=([\w-]+)/)
     if (m) {
@@ -115,11 +103,10 @@ export default function App() {
     }
   }, [])
 
-  // Al obtener resultado: confetti, scroll y actualizar el hash para compartir
   useEffect(() => {
     if (!result) return
     history.replaceState(null, '', `#ruta=${slugify(result.name)}`)
-    confetti({ particleCount: 120, spread: 75, origin: { y: 0.35 }, colors: ['#e7b85f', '#9bc1a8', '#2e7d5b', '#f3eede'] })
+    confetti({ particleCount: 120, spread: 75, origin: { y: 0.35 }, colors: ['#c46a3f', '#d9a441', '#2e6b4f', '#1f3d2e'] })
     resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }, [result])
 
@@ -136,19 +123,19 @@ export default function App() {
     })
   }, [q, comarca, tipo, dist, desn, soloCarrito])
 
-  const selectCls = "rounded-xl border border-white/18 bg-white/8 px-3 py-2.5 text-sm text-cream outline-none focus:border-sand/50 [&>option]:bg-forest [&>option]:text-cream"
+  const selectCls = "rounded-xl border border-forest/15 bg-paper px-3 py-2.5 text-sm text-forest outline-none focus:border-terracota [&>option]:bg-paper [&>option]:text-forest"
 
   return (
     <div className="flex min-h-screen flex-col items-center px-4 pb-16">
       {/* HERO */}
       <header className="relative -mx-4 w-screen overflow-hidden px-4 pb-28 pt-12 text-center">
-        <div className="mountains pointer-events-none absolute inset-0 opacity-90" aria-hidden="true" />
+        <div className="mountains pointer-events-none absolute inset-0" aria-hidden="true" />
         <div className="relative z-10">
-          <p className="mb-2.5 text-sm font-semibold uppercase tracking-[0.28em] text-salvia">Cantabria con peques</p>
-          <h1 className="mx-auto max-w-[16ch] font-display text-4xl font-semibold leading-[1.05] text-white drop-shadow-[0_2px_18px_rgba(0,0,0,0.35)] sm:text-5xl md:text-6xl">
-            Ruleta de <span className="italic text-sand">rutas</span> de senderismo
+          <p className="mb-2.5 text-sm font-semibold uppercase tracking-[0.28em] text-terracota">Cantabria con peques</p>
+          <h1 className="mx-auto max-w-[16ch] font-display text-4xl font-semibold leading-[1.05] text-forest-deep sm:text-5xl md:text-6xl">
+            Ruleta de <span className="italic text-terracota">rutas</span> de senderismo
           </h1>
-          <p className="mx-auto mt-3.5 max-w-[46ch] text-base text-cream/90 leading-relaxed sm:text-lg">
+          <p className="mx-auto mt-3.5 max-w-[46ch] text-base text-forest/75 leading-relaxed sm:text-lg">
             {routes.length} senderos fáciles y aptos para ir con peques. Gira la ruleta y descubre vuestra próxima excursión 🥾
           </p>
         </div>
@@ -160,26 +147,26 @@ export default function App() {
         <div ref={resultRef}>
           {result
             ? <ResultCard r={result} onAgain={() => wheelRef.current?.spin()} />
-            : <p className="mx-auto mt-7 max-w-md text-center text-cream/70">Pulsa <b className="text-sand">GIRAR</b> y deja que la suerte elija vuestra excursión. 🎡</p>}
+            : <p className="mx-auto mt-7 max-w-md text-center text-forest/60">Pulsa <b className="text-terracota">GIRAR</b> y deja que la suerte elija vuestra excursión. 🎡</p>}
         </div>
       </section>
 
       {/* EXPLORAR */}
       <section className="mt-16 w-full max-w-6xl">
-        <h2 className="font-display text-2xl font-semibold text-cream">Explorar todas las rutas</h2>
-        <p className="mt-1.5 max-w-3xl text-sm text-cream/60">
+        <h2 className="font-display text-2xl font-semibold text-forest-deep">Explorar todas las rutas</h2>
+        <p className="mt-1.5 max-w-3xl text-sm text-forest/55">
           📏 Distancia, ⛰️ desnivel y tipo son orientativos. El dato exacto, el track GPS, fotos y reseñas están en el enlace de Wikiloc de cada ruta.
         </p>
 
         {/* Chips de comarca */}
         <div className="mt-5 flex flex-wrap gap-2">
           <button onClick={() => setComarca('')}
-            className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition ${comarca === '' ? 'bg-sand text-forest-deep' : 'bg-white/8 text-cream hover:bg-white/15'}`}>
+            className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition ${comarca === '' ? 'bg-terracota text-cream' : 'bg-forest/5 text-forest hover:bg-forest/10'}`}>
             Todas
           </button>
           {comarcas.map(c => (
             <button key={c} onClick={() => setComarca(c === comarca ? '' : c)}
-              className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition ${comarca === c ? 'bg-sand text-forest-deep' : 'bg-white/8 text-cream hover:bg-white/15'}`}>
+              className={`rounded-full px-3.5 py-1.5 text-sm font-semibold transition ${comarca === c ? 'bg-terracota text-cream' : 'bg-forest/5 text-forest hover:bg-forest/10'}`}>
               {c}
             </button>
           ))}
@@ -188,7 +175,7 @@ export default function App() {
         {/* Filtros */}
         <div className="mt-4 flex flex-wrap items-center gap-2.5">
           <input type="search" value={q} onChange={e => setQ(e.target.value)} placeholder="🔎 Buscar ruta o lugar…"
-            className="min-w-[180px] flex-1 rounded-xl border border-white/18 bg-white/8 px-3.5 py-2.5 text-sm text-cream outline-none placeholder:text-cream/55 focus:border-sand/50" />
+            className="min-w-[180px] flex-1 rounded-xl border border-forest/15 bg-paper px-3.5 py-2.5 text-sm text-forest outline-none placeholder:text-forest/40 focus:border-terracota" />
           <select value={tipo} onChange={e => setTipo(e.target.value)} className={selectCls}>
             <option value="">Tipo: todas</option>
             <option value="Circular">🔄 Circular</option>
@@ -207,19 +194,19 @@ export default function App() {
             <option value="l">Más exigente (&gt; 150 m)</option>
           </select>
           <button onClick={() => setSoloCarrito(v => !v)}
-            className={`rounded-xl px-3.5 py-2.5 text-sm font-semibold transition ${soloCarrito ? 'bg-sand text-forest-deep' : 'border border-white/18 bg-white/8 text-cream hover:bg-white/18'}`}>
+            className={`rounded-xl px-3.5 py-2.5 text-sm font-semibold transition ${soloCarrito ? 'bg-terracota text-cream' : 'border border-forest/15 bg-paper text-forest hover:bg-forest/5'}`}>
             👶 Apto carrito
           </button>
           <button onClick={() => { setQ(''); setComarca(''); setTipo(''); setDist(''); setDesn(''); setSoloCarrito(false) }}
-            className="rounded-xl border border-white/18 bg-white/8 px-3.5 py-2.5 text-sm font-semibold text-cream transition hover:bg-white/18">
+            className="rounded-xl border border-forest/15 bg-paper px-3.5 py-2.5 text-sm font-semibold text-forest transition hover:bg-forest/5">
             Limpiar
           </button>
         </div>
 
-        <p className="mt-3 text-sm text-cream/70">{filtered.length} de {routes.length} rutas</p>
+        <p className="mt-3 text-sm text-forest/60">{filtered.length} de {routes.length} rutas</p>
 
         {filtered.length === 0
-          ? <p className="mt-6 italic text-cream/70">No hay rutas con esos filtros. Prueba a aflojarlos.</p>
+          ? <p className="mt-6 italic text-forest/60">No hay rutas con esos filtros. Prueba a aflojarlos.</p>
           : <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {filtered.map(r => <RouteCard key={r.name} r={r} />)}
             </ul>}
@@ -227,8 +214,8 @@ export default function App() {
 
       {/* MAPA */}
       <section className="mt-16 w-full max-w-6xl">
-        <h2 className="font-display text-2xl font-semibold text-cream">Mapa de rutas</h2>
-        <p className="mt-1.5 mb-4 max-w-3xl text-sm text-cream/60">
+        <h2 className="font-display text-2xl font-semibold text-forest-deep">Mapa de rutas</h2>
+        <p className="mt-1.5 mb-4 max-w-3xl text-sm text-forest/55">
           Ubicación aproximada por municipio. Pulsa un punto para ver la ruta y abrir Maps o Wikiloc.
         </p>
         <RouteMap routes={filtered} onPick={setResult} />
@@ -239,7 +226,7 @@ export default function App() {
         Hecho con 🌲 para disfrutar Cantabria con peques.<br />
         Distancias y desniveles orientativos · tracks reales en Wikiloc.
         <br />
-        <a href={SITE_URL} className="text-sand">{SITE_URL.replace('https://', '')}</a>
+        <a href={SITE_URL} className="font-semibold text-terracota">{SITE_URL.replace('https://', '')}</a>
       </footer>
     </div>
   )

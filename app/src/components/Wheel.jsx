@@ -67,7 +67,7 @@ const Wheel = forwardRef(function Wheel({ routes, onResult }, ref) {
     <div className="relative mx-auto" style={{ width: 'min(86vw, 520px)', height: 'min(86vw, 520px)' }}>
       <div
         className="absolute left-1/2 -translate-x-1/2 -top-1 z-10"
-        style={{ width: 0, height: 0, borderLeft: '20px solid transparent', borderRight: '20px solid transparent', borderTop: '38px solid var(--color-sand)', filter: 'drop-shadow(0 3px 5px rgba(0,0,0,.55))' }}
+        style={{ width: 0, height: 0, borderLeft: '20px solid transparent', borderRight: '20px solid transparent', borderTop: '38px solid var(--color-terracota)', filter: 'drop-shadow(0 3px 5px rgba(0,0,0,.35))' }}
       />
       <canvas
         ref={canvasRef}
@@ -76,7 +76,7 @@ const Wheel = forwardRef(function Wheel({ routes, onResult }, ref) {
         className="w-full h-full rounded-full wheel-spin"
         style={{
           transform: `rotate(${rotation}deg)`,
-          boxShadow: '0 0 0 8px rgba(243,238,222,.14), 0 0 0 16px rgba(12,48,36,.5), 0 24px 60px rgba(0,0,0,.5)',
+          boxShadow: '0 0 0 8px rgba(31,61,46,.06), 0 0 0 16px rgba(31,61,46,.12), 0 24px 50px rgba(20,44,32,.22)',
         }}
       />
       <button

@@ -28,7 +28,7 @@ export default function RouteMap({ routes, onPick }) {
       const lng = base[1] + jitter[1]
       const cat = categoryOf(r)
       const marker = L.circleMarker([lat, lng], {
-        radius: 7, color: '#0c3024', weight: 2, fillColor: '#e7b85f', fillOpacity: 1,
+        radius: 7, color: '#fffdf7', weight: 2, fillColor: '#c46a3f', fillOpacity: 1,
       }).addTo(map)
       marker.bindPopup(
         `<div style="font-family:Inter,sans-serif;min-width:170px">
@@ -51,8 +51,8 @@ export default function RouteMap({ routes, onPick }) {
   return (
     <div
       ref={elRef}
-      className="h-[420px] w-full overflow-hidden rounded-2xl border border-white/10"
-      style={{ background: '#0c3024' }}
+      className="h-[420px] w-full overflow-hidden rounded-2xl border border-forest/15"
+      style={{ background: '#e9e3d4' }}
     />
   )
 }
